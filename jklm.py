@@ -41,19 +41,16 @@ def bot():
             global l
             substr = driver.find_element_by_class_name("syllable").text.lower()
             s = [word for word in d if substr in word] # list of words containing substr
-            sl = [word for word in s if any(x in word for x in l)] # match with any unused letter
+            s.sort(key = lambda word: sum(1 for x in l if x in word), reverse = True) # sort by occurance of unused letters
             # keep trying until not selfturn
             while oturn.is_displayed() == False and sturn.is_displayed() == True:
                 # react to pause or end
                 if status == False:
                     return
-                # use s when sl is empty
-                if len(sl) == 0:
-                    sl = s
                 # pick a word and remove it from the lists
                 try:
-                    word = random.choice(sl)
-                    sl.remove(word)
+                    word = s[0]
+                    s.remove(word)
                     d.remove(word)
                 except:
                     pass
