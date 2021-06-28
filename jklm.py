@@ -70,6 +70,7 @@ def bot():
 # start bot
 status = True
 t = threading.Thread(target = bot)
+t.daemon = True
 t.start()
 
 # user commands
@@ -79,6 +80,7 @@ while 1:
     if cmd == "s" and status == False:
         status = True
         t = threading.Thread(target = bot)
+        t.daemon = True
         t.start()
     # pause
     elif cmd == "p" and status == True:
